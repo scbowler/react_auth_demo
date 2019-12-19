@@ -1,17 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { userSignIn, userSingOut } from '../actions';
+import { userSignIn, userSignOut } from '../actions';
 
 class Nav extends React.Component {
-    AuthBtn = (props) => {
-        const { auth, userSignIn, userSingOut } = this.props;
+    
+    AuthLinks = (props) => {
+        const { auth, userSignOut } = this.props;
 
         if(auth) {
-            return <button onClick={userSingOut} className="btn yellow black-text waves-light waves-effect">Sign Out</button>
+            return (
+                <>
+                    <li>
+                        <Link to="/secret-data">Secret Data</Link>
+                    </li>
+                    <li>
+                        <Link to="/secret-list">Secret List</Link>
+                    </li>
+                    <li>
+                        <Link to="/movie-quote">Movie Quote</Link>
+                    </li>
+                    <li>
+                        <button onClick={userSignOut} className="btn yellow black-text waves-light waves-effect">Sign Out</button>
+                    </li>
+                </>
+            );
         }
 
-        return <button onClick={userSignIn} className="btn blue lighten-3 waves-effect waves-light">Sign In</button>
+        return (
+            <>
+                <li key="sign-in">
+                    <Link to="/sign-in" >Sign In</Link>
+                </li>
+                <li key="sign-up">
+                    <Link to="/sign-up" >Sign Up</Link>
+                </li>
+            </>
+        );
     }
 
     render() {
@@ -33,15 +58,7 @@ class Nav extends React.Component {
                         <li>
                             <Link to="/about-us">About Us</Link>
                         </li>
-                        <li>
-                            <Link to="/secret-data">Secret Data</Link>
-                        </li>
-                        <li>
-                            <Link to="/secret-list">Secret List</Link>
-                        </li>
-                        <li>
-                            <this.AuthBtn/>
-                        </li>
+                        <this.AuthLinks />
                     </ul>
                 </div>
             </nav>
@@ -57,5 +74,5 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
     userSignIn: userSignIn,
-    userSingOut: userSingOut
+    userSignOut: userSignOut
 })(Nav);
